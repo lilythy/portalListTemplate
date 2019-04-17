@@ -8,12 +8,12 @@ const ColumnGroup = Table.ColumnGroup;
 
 @inject(store)
 class TableArea extends React.Component {
-  onPageNoChange = pageNo => {
-    this.props.dispatch('setSearchValues', { pageNo });
+  onPageNoChange = currentPage => {
+    this.props.dispatch('setSearchValues', { currentPage });
   };
 
   onPageSizeChange = pageSize => {
-    this.props.dispatch('setSearchValues', { pageSize, pageNo: 1 });
+    this.props.dispatch('setSearchValues', { pageSize, currentPage: 1 });
   };
 
   _renderOPer = (value, index, record) => {
@@ -27,7 +27,7 @@ class TableArea extends React.Component {
 
   render() {
     const { data, loading, total, searchValues } = this.props.state;
-    const { pageSize, pageNo } = searchValues;
+    const { pageSize, currentPage } = searchValues;
     return (
       <div>
         <Table dataSource={data} isLoading={loading} stickyTop={56}>
@@ -56,7 +56,7 @@ class TableArea extends React.Component {
             <Column title="陈列量" dataIndex="displayQuantity" width={80} />
             <Column title="操作" width={80} lock='right' cell={this._renderOPer} />
           </Table>
-          <Pagination className='marginTop10' total={total} current={pageNo} pageSize={pageSize} onChange={this.onPageNoChange} onPageSizeChange={this.onPageSizeChange} />
+          <Pagination className='marginTop10' total={total} current={currentPage} pageSize={pageSize} onChange={this.onPageNoChange} onPageSizeChange={this.onPageSizeChange} />
       </div>
     );
   }

@@ -15,12 +15,8 @@ class OperatorArea extends React.Component {
     }
   };
 
-  onFilterChange = (key, value) => {
-    this.props.dispatch('setSearchValues', { [key]: value });
-  };
-
   render() {
-    const { total, searchValues } = this.props.state;
+    const { total } = this.props.state;
     return (
       <Operation
         buttonList={[

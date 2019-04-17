@@ -2,9 +2,8 @@ import React from 'react';
 import { inject } from '@royjs/core';
 import moment from 'moment';
 import { Layout, SearchForm, Form, DatePicker, Field } from '@alife/hippo';
-import { Basic, Store, User, Department, Supplier } from '@alife/hippo-filter-collection';
+import { Basic, Store, User, Department } from '@alife/hippo-filter-collection';
 import store from '../store';
-import service from '../service';
 
 const { Section } = Layout;
 const FormItem = Form.Item;
@@ -23,15 +22,19 @@ class SearchArea extends React.Component {
   onSearch = searchValues => {
     this.props.dispatch('setSearchValues', {
       ...searchValues,
-      pageNo: 1
+      currentPage: 1
     });
   };
 
+  onReset = () => {
+    this.field.reset();
+    this.props.dispatch('resetSearchValues');
+  }
+
   render() {
-    const { data, loading, total, searchValues } = this.props.state;
     return (
       <Section border={false}>
-        <SearchForm field={this.field} onSearch={this.onSearch} onReset={this.onSearch}>
+        <SearchForm field={this.field} onSearch={this.onSearch} onReset={this.onReset}>
           <FormItem name="approveStatus"
             label="审批状态"
             placeholder="请选择"

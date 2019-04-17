@@ -7,11 +7,29 @@ const store = new Store({
     total: 0,
     searchValues: {
       pageSize: 50,
-      pageNo: 1
+      currentPage: 1
     },
     data: []
   },
   actions: {
+    setSearchValues(state, payload = {}) {
+      const values = {
+        ...state.searchValues,
+        ...payload
+      };
+
+      state.set('searchValues', values);
+      this.dispatch('search');
+    },
+    resetSearchValues(state, payload = {}) {
+      const values = {
+        pageSize: 50,
+        currentPage: 1
+      };
+
+      state.set('searchValues', values);
+      this.dispatch('search');
+    },
     async search(state) {
       state.set('loading', true);
       try {
@@ -23,15 +41,6 @@ const store = new Store({
       }
       state.set('loading', false);
     },
-
-    setSearchValues(state, payload = {}) {
-      const values = {
-        ...payload
-      };
-
-      state.searchValues.set(values);
-      this.dispatch('search');
-    }
   }
 });
 
