@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject } from '@royjs/core';
-import { Layout, Table, Operation, SearchForm, Search, Form, Pagination } from '@alife/hippo';
+import { Layout, Operation, SearchForm, Search, Form} from '@alife/hippo';
+import { addExportTask, addImportTask } from '@alife/hippo-file-async/lib/simple';
 import store from '../store';
 import service from '../service';
 
@@ -14,6 +15,31 @@ class OperatorArea extends React.Component {
       window.open('https://gw-office.alipayobjects.com/basement_prod/650deb79-c00b-49ca-add8-7d790d33de34.xlsx');
     }
   };
+
+  handleImport = () => {
+    const { searchValues } = this.props.state;
+    addImportTask(
+        {
+            async: false,
+            ...searchValues
+        },
+        {
+            bizName: 'f57d25da513e4f6b2c57901397e28d5a',
+            bizType: 'brain_sku_upload'
+        }, () => {
+        // 数据列表
+      }
+    );
+  }
+
+  handleExport = () => {
+    addExportTask({}, {
+        bizName: 'f57d25da513e4f6b2c57901397e28d5a',
+        bizType: 'bizType'
+        }, () => {
+            // 刷新列表
+    });
+  }
 
   render() {
     const { total } = this.props.state;
